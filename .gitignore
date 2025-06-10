@@ -6,6 +6,18 @@ __pycache__/
 # C extensions
 *.so
 
+# files
+*.shp
+*.shx
+*.geojson
+*.prj
+*.dbf
+*.cpg
+*.CPG
+*.sbn
+*.sbx
+
+
 # Distribution / packaging
 .Python
 build/
