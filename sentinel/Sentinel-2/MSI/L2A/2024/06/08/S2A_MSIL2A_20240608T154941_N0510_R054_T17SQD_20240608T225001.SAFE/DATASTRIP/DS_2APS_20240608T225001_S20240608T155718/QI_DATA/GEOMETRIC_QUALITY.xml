@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Earth_Explorer_File xmlns="http://gs2.esa.int/DATA_STRUCTURE/olqcReport">
+    <Earth_Explorer_Header>
+        <Fixed_Header>
+            <File_Name>GEOMETRIC_QUALITY.xml</File_Name>
+            <File_Description>Report produced by OLQC-SC</File_Description>
+            <Notes></Notes>
+            <Mission>S2A</Mission>
+            <File_Class>OPER</File_Class>
+            <File_Type>REP_OLQCPA</File_Type>
+            <Validity_Period>
+                <Validity_Start>UTC=2022-08-30T00:25:00</Validity_Start>
+                <Validity_Stop>UTC=2100-01-01T00:00:00</Validity_Stop>
+            </Validity_Period>
+            <File_Version>2</File_Version>
+            <Source>
+                <System>OLQC-SC</System>
+                <Creator>OLQC-SC</Creator>
+                <Creator_Version>06.02.00</Creator_Version>
+                <Creation_Date>UTC=2024-06-08T23:38:50</Creation_Date>
+            </Source>
+        </Fixed_Header>
+    </Earth_Explorer_Header>
+    <Data_Block type="xml">
+        <report gippVersion="1.0" globalStatus="PASSED" date="2024-06-08T23:38:50.621Z">
+            <checkList>
+                <parentID>S2A_OPER_GIP_OLQCPA_MPC__20220715T000042_V20220830T002500</parentID>
+                <name>GEOMETRIC_QUALITY</name>
+                <version>1.0</version>
+                <item url="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/" className="PDI Level 2A Datastrip Folder" name="S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10" class="http://www.esa.int/s2#pdi_level_2a_datastrip_container"/>
+                <check>
+                    <inspection creation="2024-06-08T23:38:50.506Z" duration="9" execution="2024-06-08T23:38:50.610Z" id="Geometric_Refining_Image_Refining" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check of the correctness of the Geometric Refining: Image Refining. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Geometric image refining is correct.</message>
+                    <extraValues>
+                        <value name="X_MEAN">0.025876</value>
+                        <value name="Y_MEAN">-0.00229</value>
+                        <value name="X_STDV">4.14086</value>
+                        <value name="Y_STDV">4.365043</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:50.673Z" duration="37" execution="2024-06-08T23:38:50.791Z" id="Geometric_Refining_Spatio_Residual_Histograms" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check of the correctness of the Geometric Refining: Spatio Residual Histograms. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Geometric Spatio Residual Histograms not computed.</message>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:51.101Z" duration="1" execution="2024-06-08T23:38:51.135Z" id="Geometric_Refining_Vnir_Swir_Registration" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check of the correctness of the Geometric Refining: VNIR/SWIR Registration. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">VNIR / SWIR bands have not been registered.</message>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:51.138Z" duration="3" execution="2024-06-08T23:38:51.217Z" id="Planimetric_Stability" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check the planimetric stability value  " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Planimetric stability is valid (3.0&lt;5.0) </message>
+                    <extraValues>
+                        <value name="VALUE">3.0</value>
+                        <value name="EXPECTED">5.0</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:51.590Z" duration="21" execution="2024-06-08T23:38:51.627Z" id="Absolute_Location_Value" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check the absolute Location value. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Absolute location is valid (20.0&lt;30.0) </message>
+                    <extraValues>
+                        <value name="VALUE">20.0</value>
+                        <value name="EXPECTED">30.0</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:51.732Z" duration="4" execution="2024-06-08T23:38:51.785Z" id="Ephemeris_Quality" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check the ephemeris quality value. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Ephemeris quality is valid (3.0&lt;=20.0) </message>
+                    <extraValues>
+                        <value name="VALUE">3.0</value>
+                        <value name="EXPECTED">20.0</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:51.828Z" duration="1525" execution="2024-06-08T23:38:51.859Z" id="Attitude_Quality_Indicator_Raw" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check the admissibility of Raw Attitude Quality Indicator. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">No wrong raw attitude indicators were found.</message>
+                </check>
+                <check>
+                    <inspection creation="2024-06-08T23:38:53.385Z" duration="156" execution="2024-06-08T23:38:53.401Z" id="Attitude_Quality_Indicator_Corrected" item="MTD_DS.xml" itemURL="/mnt/nfs-l2-05/l2-processing/processing-id-55116-2024-06-08-22-49-03/TaskTable_20240608T224903/FORMAT_METADATA_DS_L2A_ADAPT/output/PDI_DS/S2A_OPER_MSI_L2A_DS_2APS_20240608T225001_S20240608T155718_N05.10/MTD_DS.xml" name="Check the admissibility of Corrected Attitude Quality Indicator. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">No wrong corrected attitude indicators were found.</message>
+                </check>
+            </checkList>
+        </report>
+    </Data_Block>
+</Earth_Explorer_File>
