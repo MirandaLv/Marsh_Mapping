@@ -24,7 +24,7 @@ START_DATE = "2024-05-01"
 END_DATE = "2024-09-30"
 AOI_PATH = "../bounding_box.geojson"
 # AOI_PATH = "../boundary.geojson"
-OUTPUT_DIR = ""
+OUTPUT_DIR = "../dataset"
 
 
 
@@ -78,8 +78,6 @@ def metadata_generation(items: list):
     return df
 
 
-# TODO: get a list of downloading tiles that covers the entire AOI
-
 def set_download_granules(df: pd.DataFrame, error_item=None):
     df["downloaded"] = 0
 
@@ -92,6 +90,33 @@ def set_download_granules(df: pd.DataFrame, error_item=None):
     return df
 
 
+def download_all(items:list, output):
+
+    for idx, item in enumerate(items):
+
+        print(f"\nProcessing item {idx + 1} of {len(items)}")
+
+        safe_asset = item.assets.get("PRODUCT").to_dict().get("alternate", {}).get("s3")
+
+        if not safe_asset:
+            print("Downloadable asset not found in STAC metadata.")
+            return
+
+        print("Found downloadable product. Connecting to S3...")
+        session = boto3.session.Session()
+        s3 = session.resource(
+            's3',
+            endpoint_url=ENDPOINT_URL,
+            aws_access_key_id=ACCESS_KEY,
+            aws_secret_access_key=SECRET_KEY,
+            region_name='default'
+        )
+
+        bucket_name, product_path = get_url_parts(safe_asset["href"])
+        print(f"Downloading path: {product_path}")
+
+        download_s3_product(s3.Bucket(bucket_name), product_path, target_dir=output)
+        print(f"Download completed! Files saved to: {OUTPUT_DIR}")
 
 # -------- Main Process -------- #
 
@@ -115,31 +140,8 @@ def main():
         print("No matching Sentinel-2 products found.")
         return
 
-    for idx, item in enumerate(download_items):
-        print(f"\nProcessing item {idx + 1} of {len(items)}")
-
-        # safe_asset = item.assets.get("PRODUCT").to_dict().get("alternate", {}).get("s3")
-        #
-        # if not safe_asset:
-        #     print("Downloadable asset not found in STAC metadata.")
-        #     return
-        #
-        # print("Found downloadable product. Connecting to S3...")
-        # session = boto3.session.Session()
-        # s3 = session.resource(
-        #     's3',
-        #     endpoint_url=ENDPOINT_URL,
-        #     aws_access_key_id=ACCESS_KEY,
-        #     aws_secret_access_key=SECRET_KEY,
-        #     region_name='default'
-        # )
-        #
-        # bucket_name, product_path = get_url_parts(safe_asset["href"])
-        # print(f"Downloading path: {product_path}")
-        #
-        # download_s3_product(s3.Bucket(bucket_name), product_path, target_dir=OUTPUT_DIR)
-        # print(f"Download completed! Files saved to: {OUTPUT_DIR}")
-
+    print("Start downloading...")
+    download_all(download_items[0:2], OUTPUT_DIR)
 
 
 if __name__ == "__main__":
