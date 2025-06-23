@@ -4,7 +4,6 @@
 
 import os
 import rasterio
-from rasterio.merge import merge
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 import fiona
 from rasterio.mask import mask
@@ -14,8 +13,6 @@ from rasterio.merge import merge
 from typing import Union, Tuple, List
 from pathlib import Path
 from rasterio.enums import Resampling as ResampleEnum
-from rasterio.transform import from_origin
-from rasterio.io import DatasetReader
 
 def find_img_data_folder(root_path):
     """
