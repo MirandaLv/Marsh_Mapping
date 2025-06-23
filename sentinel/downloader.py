@@ -14,8 +14,11 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 # -------- Replace your access key an secret key from https://dataspace.copernicus.eu/ --------
 # More info: https://documentation.dataspace.copernicus.eu/APIs/OData.html#product-download
 
-ACCESS_KEY = ""
-SECRET_KEY = ""
+ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
+SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
+
+# ACCESS_KEY = ""
+# SECRET_KEY = ""
 
 PRODUCT_TYPE = "S2MSI2A" # Level-2A product
 DATA_COLLECTION = "SENTINEL-2"
@@ -24,8 +27,8 @@ START_DATE = "2024-05-01"
 END_DATE = "2024-09-30"
 AOI_PATH = "../bounding_box.geojson"
 # AOI_PATH = "../boundary.geojson"
-OUTPUT_DIR = "../dataset"
-
+OUTPUT_DIR = "../dataset/raw"
+DATA_META = "sentinel2_meta.csv"
 
 
 def get_url_parts(url: str) -> Tuple[str, str]:
@@ -74,7 +77,9 @@ def metadata_generation(items: list):
 
     df = pd.DataFrame(properties_list)
     df['item'] = items
-    df = df.drop_duplicates()
+    print("shape before deduplication: {}".format(df.shape))
+    df = df.drop_duplicates(subset=["granuleIdentifier"])
+    print("shape after deduplication: {}".format(df.shape))
     return df
 
 
@@ -131,17 +136,20 @@ def main():
     print(f"Searching Sentinel-2 imagery ({START_DATE} to {END_DATE}) with cloud cover <={MAX_CLOUD_COVER}%")
     items = search_sentinel_items(client, bbox, START_DATE, END_DATE, MAX_CLOUD_COVER, PRODUCT_TYPE) # Get all items that matched the filter criteria
 
+    print("Generating download tiles list....")
     # Pick up non repeatable tiles and download
     df = metadata_generation(items)
     df = set_download_granules(df)
+    df.to_csv(os.path.join(OUTPUT_DIR, DATA_META))
+
     download_items = df.loc[df.downloaded == 1]['item'].tolist()
 
     if not download_items:
         print("No matching Sentinel-2 products found.")
         return
 
-    print("Start downloading...")
-    download_all(download_items[0:2], OUTPUT_DIR)
+    print("Start downloading {} of tiles...".format(len(download_items)))
+    download_all(download_items, OUTPUT_DIR)
 
 
 if __name__ == "__main__":
