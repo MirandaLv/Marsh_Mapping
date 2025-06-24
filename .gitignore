@@ -16,6 +16,8 @@ __pycache__/
 *.CPG
 *.sbn
 *.sbx
+*.jp2
+*.tif
 
 
 # Distribution / packaging

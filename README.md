@@ -1,7 +1,7 @@
 # Marsh_Mapping
 
-- Sentinel metadata retrieval -> .csv
-- Sentinel data downloader
-- Imagery tile preprocessing
+- Sentinel metadata retrieval -> .csv (done)
+- Sentinel data downloader (done)
+- Imagery tile preprocessing 
 - imagery inference
 - stitch back to original data

@@ -13,7 +13,9 @@ def get_poly_bound(gdf):
 
     return minx, miny, maxx, maxy
 
-boundary_file = '../dataset/raw/VA_TMI_2011_2019.shp'
+# boundary_file = '../dataset/raw/VA_TMI_2011_2019.shp'
+
+boundary_file = '../dataset/raw/guinea_marsh.geojson'
 
 boundary_df = gpd.read_file(boundary_file)
 boundary_df = boundary_df.to_crs(4326)
@@ -26,6 +28,6 @@ bbox_polygon = box(minx, miny, maxx, maxy)
 bbox_gdf = gpd.GeoDataFrame(index=[0], crs='EPSG:4326', geometry=[bbox_polygon])
 
 # Save to GeoJSON
-bbox_gdf.to_file('../bounding_box.geojson', driver='GeoJSON')
+bbox_gdf.to_file('../bounding_box_guinea.geojson', driver='GeoJSON')
 
-print(f"Bounding box exported to ../bounding_box.geojson")
+print(f"Bounding box exported to ../bounding_box_guinea.geojson")

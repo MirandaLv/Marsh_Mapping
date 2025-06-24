@@ -19,10 +19,10 @@ SECRET_KEY = ""
 
 PRODUCT_TYPE = "S2MSI2A" # Level-2A product
 DATA_COLLECTION = "SENTINEL-2"
-MAX_CLOUD_COVER = 3
+MAX_CLOUD_COVER = 1
 START_DATE = "2024-05-01"
 END_DATE = "2024-09-30"
-AOI_PATH = "../bounding_box.geojson"
+AOI_PATH = "../bounding_box_guinea.geojson"
 # AOI_PATH = "../boundary.geojson"
 OUTPUT_DIR = "../dataset/raw"
 DATA_META = "sentinel2_meta.csv"

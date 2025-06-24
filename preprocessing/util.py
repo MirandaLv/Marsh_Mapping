@@ -4,6 +4,7 @@
 
 import os
 import rasterio
+
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 import fiona
 from rasterio.mask import mask
@@ -35,58 +36,144 @@ def find_img_data_folder(root_path):
     return paths  # Not found
 
 
-def re_projection(
-    intif: Union[str, Path],
-    outtif: Union[str, Path],
-    resampling_method: ResampleEnum = ResampleEnum.bilinear,
-    dst_crs: str = 'EPSG:4326',
-    dst_resolution: Tuple[float, float] = (0.000103632,0.000103632)  # (x_res, y_res) # default unit is degree
+
+
+def re_projection(intif, outtif, resampling_method=ResampleEnum.bilinear):
+    """
+    Image reprojection to project the raw imagery bands into WGS-84
+
+    :param intif: input imagery path
+    :param outtif: reprojected imagery
+    :return:
+    """
+    dst_crs = 'EPSG:4326'
+
+    src = rasterio.open(intif, driver='JP2OpenJPEG')
+    transform, width, height = calculate_default_transform(src.crs, dst_crs, src.width, src.height, *src.bounds)
+    kwargs = src.meta.copy()
+    kwargs.update({
+        'crs': dst_crs,
+        'transform': transform,
+        'width': width,
+        'height': height,
+        'driver': 'GTiff'
+    })
+
+    with rasterio.open(outtif, 'w', **kwargs) as dst:
+        for i in range(1, src.count + 1):
+            reproject(
+                source=rasterio.band(src, i),
+                destination=rasterio.band(dst, i),
+                src_transform=src.transform,
+                src_crs=src.crs,
+                dst_transform=transform,
+                dst_crs=dst_crs,
+                resampling=resampling_method)
+
+#
+#
+# def re_projection(
+#     intif: Union[str, Path],
+#     outtif: Union[str, Path],
+#     resampling_method: ResampleEnum = ResampleEnum.bilinear,
+#     dst_crs: str = 'EPSG:4326',
+#     dst_resolution: Tuple[float, float] = (0.0001,0.0001)  # (x_res, y_res) # default unit is degree 0.000103632
+# ):
+#     """
+#     Reprojects a raster image into a target CRS, with optional resampling method and output resolution.
+#
+#     Parameters
+#     ----------
+#     intif : str or Path
+#         Path to the input raster file.
+#     outtif : str or Path
+#         Path to the output reprojected raster file.
+#     resampling_method : rasterio.enums.Resampling, optional
+#         Resampling method to use during reprojection. Default is nearest.
+#     dst_crs : str, optional
+#         Target CRS for reprojection. Default is 'EPSG:4326'.
+#     dst_resolution : tuple of float (x_res, y_res), optional
+#         Desired output resolution in target CRS units (e.g., degrees or meters).
+#     """
+#     with rasterio.open(intif, driver='JP2OpenJPEG') as src:
+#         if dst_resolution:
+#             # Manually compute transform and output shape based on resolution
+#             transform, width, height = calculate_default_transform(
+#                 src.crs, dst_crs, src.width, src.height, *src.bounds, resolution=dst_resolution
+#             )
+#         else:
+#             # Use default transform/size from source
+#             transform, width, height = calculate_default_transform(
+#                 src.crs, dst_crs, src.width, src.height, *src.bounds
+#             )
+#
+#         kwargs = src.meta.copy()
+#         kwargs.update({
+#             'crs': dst_crs,
+#             'transform': transform,
+#             'width': width,
+#             'height': height,
+#             'driver': 'GTiff'
+#         })
+#
+#         with rasterio.open(outtif, 'w', **kwargs) as dst:
+#             for i in range(1, src.count + 1):
+#                 reproject(
+#                     source=rasterio.band(src, i),
+#                     destination=rasterio.band(dst, i),
+#                     src_transform=src.transform,
+#                     src_crs=src.crs,
+#                     dst_transform=transform,
+#                     dst_crs=dst_crs,
+#                     resampling=resampling_method
+#                 )
+
+
+def reproject_to_match(
+    input_raster: Union[str, Path],
+    output_raster: Union[str, Path],
+    reference_raster: Union[str, Path],
+    resampling_method: Resampling = Resampling.bilinear
 ):
     """
-    Reprojects a raster image into a target CRS, with optional resampling method and output resolution.
+    Reproject and resample an input raster to match the spatial resolution, transform,
+    CRS, and shape of a reference raster.
 
     Parameters
     ----------
-    intif : str or Path
-        Path to the input raster file.
-    outtif : str or Path
-        Path to the output reprojected raster file.
-    resampling_method : rasterio.enums.Resampling, optional
-        Resampling method to use during reprojection. Default is nearest.
-    dst_crs : str, optional
-        Target CRS for reprojection. Default is 'EPSG:4326'.
-    dst_resolution : tuple of float (x_res, y_res), optional
-        Desired output resolution in target CRS units (e.g., degrees or meters).
+    input_raster : str or Path
+        Path to input raster to be reprojected.
+    output_raster : str or Path
+        Path to save the reprojected raster.
+    reference_raster : str or Path
+        Path to the reference raster to match.
+    resampling_method : rasterio.enums.Resampling
+        Resampling method (nearest, bilinear, cubic, etc.).
     """
-    with rasterio.open(intif, driver='JP2OpenJPEG') as src:
-        if dst_resolution:
-            # Manually compute transform and output shape based on resolution
-            transform, width, height = calculate_default_transform(
-                src.crs, dst_crs, src.width, src.height, *src.bounds, resolution=dst_resolution
-            )
-        else:
-            # Use default transform/size from source
-            transform, width, height = calculate_default_transform(
-                src.crs, dst_crs, src.width, src.height, *src.bounds
-            )
+    with rasterio.open(reference_raster) as ref:
+        dst_crs = ref.crs
+        dst_transform = ref.transform
+        dst_width = ref.width
+        dst_height = ref.height
 
-        kwargs = src.meta.copy()
-        kwargs.update({
+    with rasterio.open(input_raster) as src:
+        dst_profile = src.meta.copy()
+        dst_profile.update({
             'crs': dst_crs,
-            'transform': transform,
-            'width': width,
-            'height': height,
+            'transform': dst_transform,
+            'width': dst_width,
+            'height': dst_height,
             'driver': 'GTiff'
         })
 
-        with rasterio.open(outtif, 'w', **kwargs) as dst:
+        with rasterio.open(output_raster, 'w', **dst_profile) as dst:
             for i in range(1, src.count + 1):
                 reproject(
                     source=rasterio.band(src, i),
                     destination=rasterio.band(dst, i),
                     src_transform=src.transform,
                     src_crs=src.crs,
-                    dst_transform=transform,
+                    dst_transform=dst_transform,
                     dst_crs=dst_crs,
                     resampling=resampling_method
                 )

@@ -3,7 +3,7 @@
 import os
 import rasterio
 from pathlib import Path
-from util import re_projection, create_mosaic, merge_bands_to_multispectral
+from util import re_projection, create_mosaic, merge_bands_to_multispectral, split_and_save_patches, reproject_to_match
 import glob
 
 year = "2024"
@@ -21,6 +21,8 @@ b_path = os.path.join(base_path, "dataset/processed/sentinel")
 reproject_path = os.path.join(b_path, 'reprojection')
 
 merge_output_path = os.path.join(b_path, "combined_{}.tif".format(year))
+
+output_dir = os.path.join(b_path, "patches")
 
 band_list = ["02", "03", "04", "05", "06", "07", "08" ,"8A", "11", "12"] # getting the band list
 res_list = ["10", "10", "10", "20", "20", "20", "10", "20", "20", "20"] # getting the corresponding resolution
@@ -48,7 +50,11 @@ for b, res in zip(band_list, res_list):
             print("Reproject file {}".format(file))
 
             # standardize all band resolution to 10m resolution, default is 0.000103632
-            re_projection(file, outfile)
+            if b == "02":
+                re_projection(file, outfile)
+                reference_path = outfile
+            else:
+                reproject_to_match(file, outfile, reference_path)
 
     mosaic_path = Path(b_path) / 'merge_B{}_{}.tif'.format(b, year)
     create_mosaic(proj_band_path, mosaic_path)
@@ -58,6 +64,8 @@ for b, res in zip(band_list, res_list):
 # Merge all band information into a multispectral imagery
 merge_bands_to_multispectral(mosaic_path_list, merge_output_path)
 
+# Image patch generation
+split_and_save_patches(merge_output_path, output_dir, patch_size=128, overlap=10, skip_partial=True)
 
 
 
