@@ -18,6 +18,8 @@ __pycache__/
 *.sbx
 *.jp2
 *.tif
+*.ckpt
+*.xml
 
 
 # Distribution / packaging
