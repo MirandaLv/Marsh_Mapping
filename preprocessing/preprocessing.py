@@ -6,18 +6,18 @@ from pathlib import Path
 from util import re_projection, create_mosaic, merge_bands_to_multispectral, split_and_save_patches, reproject_to_match
 import glob
 
-year = "2024"
+year = "2023"
 
 base_path = Path.cwd().parent
 
-raw_data_path = os.path.join(base_path, "dataset/raw/Sentinel-2")
+raw_data_path = os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A/{}".format(year))
 aoi_path = os.path.join(base_path, "bounding_box.geojson")
 
-b_path = os.path.join(base_path, "dataset/processed/sentinel")
+b_path = os.path.join(base_path, "dataset/processed/sentinel_{}".format(year))
 
 # Setting up different directories for the data
-(base_path / 'dataset' / 'processed' /'sentinel').mkdir(exist_ok=True, parents=True)
-(base_path / 'dataset' /'processed' / 'sentinel' / 'reprojection').mkdir(exist_ok=True, parents=True)
+(base_path / 'dataset' / 'processed' /'sentinel_{}'.format(year)).mkdir(exist_ok=True, parents=True)
+(base_path / 'dataset' /'processed' / 'sentinel_{}'.format(year) / 'reprojection').mkdir(exist_ok=True, parents=True)
 reproject_path = os.path.join(b_path, 'reprojection')
 
 merge_output_path = os.path.join(b_path, "combined_{}.tif".format(year))

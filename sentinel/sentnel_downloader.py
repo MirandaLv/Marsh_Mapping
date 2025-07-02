@@ -14,14 +14,17 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 # -------- Replace your access key an secret key from https://dataspace.copernicus.eu/ --------
 # More info: https://documentation.dataspace.copernicus.eu/APIs/OData.html#product-download
 
-ACCESS_KEY = ""
-SECRET_KEY = ""
+# ACCESS_KEY = ""
+# SECRET_KEY = ""
+
+ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
+SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 
 PRODUCT_TYPE = "S2MSI2A" # Level-2A product
 DATA_COLLECTION = "SENTINEL-2"
-MAX_CLOUD_COVER = 1
-START_DATE = "2024-05-01"
-END_DATE = "2024-09-30"
+MAX_CLOUD_COVER = 3
+START_DATE = "2017-05-01"
+END_DATE = "2017-10-30"
 AOI_PATH = "../bounding_box_guinea.geojson"
 # AOI_PATH = "../boundary.geojson"
 OUTPUT_DIR = "../dataset/raw"
@@ -75,7 +78,10 @@ def metadata_generation(items: list):
     df = pd.DataFrame(properties_list)
     df['item'] = items
     print("shape before deduplication: {}".format(df.shape))
-    df = df.drop_duplicates(subset=["granuleIdentifier"])
+
+    if 'granuleIdentifier' in df.columns:
+        df = df.drop_duplicates(subset=["granuleIdentifier"])
+
     print("shape after deduplication: {}".format(df.shape))
     return df
 
@@ -83,12 +89,19 @@ def metadata_generation(items: list):
 def set_download_granules(df: pd.DataFrame, error_item=None):
     df["downloaded"] = 0
 
-    if error_item is not None: # set not downloadable tiles
-        df.loc[df.item == error_item, "downloaded"] = -1
+    # Sort by tileid and cloud_cover
+    df = df.sort_values(by=['tileId', 'cloudCover'])
 
-    for i in set(df["tileId"].to_list()):
-        best_item = df.loc[(df.tileId == i) & (df.downloaded != -1)].sort_values("cloudCover").iloc[0].granuleIdentifier
-        df.loc[df.granuleIdentifier == best_item, "downloaded"] = 1
+    # For each tileid, set downloaded = 1 for the first (lowest cloud cover) row
+    df.loc[df.groupby('tileId').head(1).index, 'downloaded'] = 1
+
+    # if error_item is not None: # set not downloadable tiles
+    #     df.loc[df.item == error_item, "downloaded"] = -1
+    #
+    # for i in set(df["tileId"].to_list()):
+    #     print(i)
+    #     best_item = df.loc[(df.tileId == i) & (df.downloaded != -1)].sort_values("cloudCover").iloc[0].granuleIdentifier
+    #     df.loc[df.granuleIdentifier == best_item, "downloaded"] = 1
     return df
 
 

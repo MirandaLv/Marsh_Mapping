@@ -14,6 +14,9 @@ from rasterio.merge import merge
 from typing import Union, Tuple, List
 from pathlib import Path
 from rasterio.enums import Resampling as ResampleEnum
+import pandas as pd
+import numpy as np
+
 
 def find_img_data_folder(root_path):
     """
@@ -337,7 +340,7 @@ def create_mosaic(proj_band_paths, mosaic_path):
 
 
 
-def split_and_save_patches(input_tif, output_dir, patch_size=256, overlap=0, bands=None, skip_partial=True):
+def split_and_save_patches(input_tif, output_dir, patch_size=256, overlap=0, bands=None, skip_partial=True, csv_filename ="patch_index.csv"):
     """
     Create image patches for model training/inferencing
 
@@ -350,6 +353,9 @@ def split_and_save_patches(input_tif, output_dir, patch_size=256, overlap=0, ban
         skip_partial (bool): Skip patches that would go beyond image bounds.
     """
     os.makedirs(output_dir, exist_ok=True)
+    csv_path = Path(output_dir) / csv_filename
+    patch_names = []
+    patch_paths = []
 
     with rasterio.open(input_tif) as src:
         img_width = src.width
@@ -385,11 +391,78 @@ def split_and_save_patches(input_tif, output_dir, patch_size=256, overlap=0, ban
                     "count": total_bands
                 })
 
-                patch_path = os.path.join(output_dir, f"patch_{count:05d}.tif")
+                patch_filename = f"patch_{count:05d}.tif"
+                patch_path = os.path.join(output_dir, patch_filename)
                 with rasterio.open(patch_path, 'w', **meta) as dst:
                     dst.write(patch)
 
+                patch_names.append(patch_filename)
+                patch_paths.append(str(Path(patch_path).resolve()))
+
                 count += 1
 
+    # Create DataFrame
+    df = pd.DataFrame({
+        "patch_name": patch_names,
+        "patch_path": patch_paths
+    })
+
+    df.to_csv(csv_path, index=False)
     print(f"{count} patches saved to {output_dir}")
+
+
+
+# Post processing
+
+def compute_ndwi(green: np.ndarray, nir: np.ndarray) -> np.ndarray:
+    """Compute the NDWI index."""
+    ndwi = (green.astype(np.float32) - nir) / (green + nir + 1e-6)
+    return ndwi
+
+
+def read_band(image_path: Path, band_index: int) -> np.ndarray:
+    """Reads a specific band from a raster file (1-based indexing)."""
+    with rasterio.open(image_path) as src:
+        return src.read(band_index)
+
+
+def read_multiband_image(image_path: Path) -> np.ndarray:
+    """Reads a multiband raster and returns as NumPy array."""
+    with rasterio.open(image_path) as src:
+        return src.read()  # shape: (bands, height, width)
+
+
+def create_land_water_mask(ndwi: np.ndarray, threshold: float) -> np.ndarray:
+    """Generates a binary land/water mask from NDWI."""
+    land_mask = (ndwi < threshold).astype(np.uint8)  # 1 = land, 0 = water
+    return land_mask
+
+
+def mask_marsh_prediction(marsh_pred: np.ndarray, land_mask: np.ndarray) -> np.ndarray:
+    """
+    Removes marsh predictions from areas classified as water.
+    Automatically crops the land mask to match prediction size if needed.
+    """
+    if land_mask.shape != marsh_pred.shape:
+        # Calculate crop offsets
+        h, w = marsh_pred.shape
+        land_mask_cropped = land_mask[:h, :w]
+        print(f"[WARN] land_mask shape {land_mask.shape} doesn't match marsh_pred shape {marsh_pred.shape}. Cropping land_mask.")
+    else:
+        land_mask_cropped = land_mask
+
+    return marsh_pred * land_mask_cropped
+
+
+def save_raster(output_path: Path, data: np.ndarray, reference_raster: Path, dtype='uint8') -> None:
+    """Saves a single-band raster using the spatial reference of another file."""
+    with rasterio.open(reference_raster) as src:
+        meta = src.meta.copy()
+        meta.update({
+            'count': 1,
+            'dtype': dtype,
+            'compress': 'lzw'
+        })
+        with rasterio.open(output_path, 'w', **meta) as dst:
+            dst.write(data, 1)
 
