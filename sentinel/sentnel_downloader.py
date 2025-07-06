@@ -17,7 +17,6 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 # ACCESS_KEY = ""
 # SECRET_KEY = ""
 
-
 ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
 SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 
@@ -26,7 +25,7 @@ DATA_COLLECTION = "SENTINEL-2"
 MAX_CLOUD_COVER = 3
 START_DATE = "2017-05-01"
 END_DATE = "2017-10-30"
-AOI_PATH = "../bounding_box_guinea.geojson"
+AOI_PATH = "../dataset/raw/guinea_marsh.geojson"
 # AOI_PATH = "../boundary.geojson"
 OUTPUT_DIR = "../dataset/raw"
 DATA_META = "sentinel2_meta.csv"
@@ -55,6 +54,11 @@ def download_s3_product(bucket, product_prefix: str, target_dir: str = "") -> No
 def get_aoi_bbox(aoi_file: str) -> List[float]:
     """Get the bounding box of AOI"""
     gdf = gpd.read_file(aoi_file)
+
+    if gdf.crs != "EPSG:4326":
+        gdf = gdf.to_crs("EPSG:4326")
+        print("Reprojected to EPSG:4326")
+
     return gdf.total_bounds.tolist()
 
 

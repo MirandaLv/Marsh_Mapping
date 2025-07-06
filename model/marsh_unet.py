@@ -5,15 +5,22 @@ import torch
 from torch.utils.data import DataLoader
 from dataloader import GenMARSH
 import rasterio
+import sys
+from pathlib import Path
+
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
+
 from processing.stitching import stitch_tiff_patches
 
 # prepare data for training
 
-year = "2023"
+year = "2017"
 
-folder_path = "../dataset/processed/sentinel_{}/patches".format(year) #image_multiband_128_more
-model_path = "../weights/sentinel/unet/last.ckpt"
-outpath = "../dataset/predicted/NAIP/inference_{}".format(year)
+folder_path = project_root / "dataset" / "processed" / f"sentinel_{year}" / "patches" #image_multiband_128_more
+
+model_path = project_root / "weights" / "sentinel" / "unet" / "last.ckpt"
+outpath = project_root / "dataset" / "predicted" / "sentinel" / f"inference_{year}"
 
 os.makedirs(outpath, exist_ok=True)
 

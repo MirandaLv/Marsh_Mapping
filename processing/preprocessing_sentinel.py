@@ -6,11 +6,16 @@ from pathlib import Path
 from util import re_projection, create_mosaic, merge_bands_to_multispectral, split_and_save_patches, reproject_to_match
 import glob
 
-year = "2023"
+year = "2017"
 
 base_path = Path.cwd().parent
 
-raw_data_path = os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A/{}".format(year))
+# The data are saved to different subfolder name depending on the year
+if int(year) >= 2022:
+    raw_data_path = Path(os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A/{}".format(year)))
+else:
+    raw_data_path = Path(os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A_N0500/{}".format(year)))
+
 aoi_path = os.path.join(base_path, "bounding_box.geojson")
 
 b_path = os.path.join(base_path, "dataset/processed/sentinel_{}".format(year))
@@ -32,7 +37,6 @@ mosaic_path_list = []
 for b, res in zip(band_list, res_list):
 
     print("Working on band {}".format(b))
-    raw_data_path = Path(raw_data_path)
     band_granules_path = list(raw_data_path.rglob("*B{}_{}m.jp2".format(b, res)))
 
     band_granules_src = [rasterio.open(i, driver='JP2OpenJPEG') for i in band_granules_path]
