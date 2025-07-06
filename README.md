@@ -18,7 +18,7 @@ Run this command on terminal:
 
 
 ### Imagery acquisition
-- **Sentinel-2 data:** The Copernicus Open Access Hub (SciHub) was deprecated in 2023, thus a more convenient way to access the sentinel data is through the Copernicus Data Space Ecosystem. Follow this link (https://documentation.dataspace.copernicus.eu/APIs/S3.html) to create a CDSE account, and getting the ACCESS KEY and SECRET KEY to access data saved on S3.  
+- **Sentinel-2 data:** Follow this page to download NAIP data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/Sentinel-2.  
 
 - **NAIP:** Follow this page to download NAIP data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/NAIP. 
 
