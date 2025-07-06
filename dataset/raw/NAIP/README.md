@@ -6,7 +6,7 @@ NAIP data is publicly available and commonly used for land cover classification,
 
 The most recent NAIP collected by Virginia in 2021 can be access: https://www.fisheries.noaa.gov/inport/item/69003, the 2018 Virginia NAIP can be access: https://www.fisheries.noaa.gov/inport/item/58386.
 
-Steps to download the recent NAIP tiles, using the 2018 imagery as an example:
+**Steps to download the recent NAIP tiles, using the 2018 imagery as an example:**
 
 1. Go to: https://www.fisheries.noaa.gov/inport/item/58386
 2. Click the Customized Download on this page, it will take you to the Digital coast: Data Access Viewer. ![Alt text](screenshots/CoastalMapViewer.png).
