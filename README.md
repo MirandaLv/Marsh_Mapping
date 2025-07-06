@@ -8,7 +8,9 @@ This post outlines the workflow for mapping tidal marshes using Sentinel-2 multi
 
     `conda env create --file=environment.yml`
 
-For windows user: Please refer conda user guidance to install conda, and create a virtual environment with the .yaml file (https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html). Or install Anaconda by following the prompt here: https://chatgpt.com/share/686acab8-b3e4-8004-8335-56d71a7292f6
+For windows user: Please refer conda user guidance to install conda, and create a virtual environment with the .yaml file (https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html). 
+
+**Recommend:** Download and install Anaconda or Miniconda for Windows. It will add the necessary tools to your system and register the conda command in Anaconda Prompt. Sample prompt to follow: https://chatgpt.com/share/686acab8-b3e4-8004-8335-56d71a7292f6.
 
 - Run this command on terminal to activate the virtual environment:
 
