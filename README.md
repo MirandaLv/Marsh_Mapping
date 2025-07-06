@@ -16,7 +16,7 @@ For windows user: Please refer conda user guidance to install conda, and create 
 
 
 ### Imagery acquisition
-- **Sentinel-2 data:** Follow this page to download NAIP data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/Sentinel-2.  
+- **Sentinel-2 data:** Follow this page to download Sentinel multispectral data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/Sentinel-2.  
 
 - **NAIP:** Follow this page to download NAIP data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/NAIP. 
 
