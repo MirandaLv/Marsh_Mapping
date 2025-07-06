@@ -4,9 +4,7 @@ This post outlines the workflow for mapping tidal marshes using Sentinel-2 multi
 
 ### Setting up the working environment
 
-- For mac and linux user:
-
-Run this command on terminal:
+- For mac and linux user, run this command on terminal:
 
 `conda env create --file=environment.yml`
 
