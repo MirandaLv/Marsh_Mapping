@@ -140,8 +140,8 @@ def main(year: str, tile_name: str) -> None:
 
     patch_folder = base_path / f"processed/NAIP_{year}/patches"
     checkpoint_path = Path("../weights/NAIP/unet/last.ckpt")
-    prediction_output = base_path / f"predicted/NAIP/inference_{year}_{suffix}"
-    mosaic_output = base_path / f"merge_{year}_{suffix}.tif"
+    prediction_output = base_path / f"predicted/NAIP/inference_{year}{suffix}"
+    mosaic_output = base_path / f"predicted/NAIP/merge_{year}{suffix}.tif"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     batch_size = 32
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     parser.add_argument("--tile-name", type=str, default="", help="Optional tile name to append to output folder")
 
     args = parser.parse_args()
-    main(args.year)
+    main(args.year, args.tile_name)
 
 
 

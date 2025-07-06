@@ -6,6 +6,7 @@ import numpy as np
 import rasterio
 from torch.utils.data import Dataset
 import os
+from pathlib import Path
 
 random.seed(0)
 np.random.seed(0)
@@ -16,7 +17,7 @@ class GenMARSH(Dataset):
 
     def __init__(self, folder_path, mode="train", ndvi=True, ndwi=True, datasource="sentinel"):
 
-        self.folder_path = folder_path
+        self.folder_path = Path(folder_path)
         self.image_files = sorted([
             os.path.join(folder_path, f)
             for f in os.listdir(folder_path)

@@ -5,7 +5,7 @@ import torch
 from torch.utils.data import DataLoader
 from dataloader import GenMARSH
 import rasterio
-from stitching import stitch_tiff_patches
+from processing.stitching import stitch_tiff_patches
 
 # prepare data for training
 
@@ -63,9 +63,8 @@ def run_inference(model, dataloader, output_dir, device):
                         dst.write(pred.astype('float32'), 1)  # Write to band 1 (uint8)
 
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# run_inference(model, dataloader, outpath, device)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+run_inference(model, dataloader, outpath, device)
 
 output_mosaic_path = "../dataset/merge_{}.tif".format(year)
 stitch_tiff_patches(outpath, output_mosaic_path)
