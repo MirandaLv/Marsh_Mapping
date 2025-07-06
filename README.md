@@ -33,7 +33,7 @@ For windows user: Please refer conda user guidance to install conda, and create 
 5. Creating imagery patches and saved into 'dataset/sentinel/patches' for imagery inferencing.
 
 
-### Model Inference
+## Model Inference
 
 
 ## Image Post-processing
