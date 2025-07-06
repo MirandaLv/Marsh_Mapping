@@ -1,4 +1,4 @@
-# Marsh_Mapping
+# Marsh Mapping with Sentinel-2 MSI and NAIP imagery with Deep Learning
 
 This post outlines the workflow for mapping tidal marshes using Sentinel-2 multispectral imagery and National Agriculture Imagery Program (NAIP) data. It covers the full process - from data download and preprocessing to model prediction and post-processing of the imagery.
 
