@@ -13,7 +13,8 @@ The Copernicus Open Access Hub (SciHub) was deprecated in 2023, thus a more conv
 2. Open the python file 'sentinel_downloader.py' in your python file editor under the 'sentinel' folder.
 3. Replace the ACCESS KEY and SECRET KEY variables with your CDSE credential.![Alt text](screenshots/keys.png).
 4. There are a few variables to adjust based on your need, for example, the maximum percentage of cloud cover 'MAX_CLOUD_COVER' allowed in your imagery filter, START_DATE and END_DATE for when was the imagery collected, the AOI_PATH is the .geojson or .shapefile boundary of your AOI.
-5. The sentinel_downloader.py script retrieves available Sentinel imagery that overlaps with your area of interest (AOI) based on specified filter criteria. For tiles that meet all search conditions and fully cover the AOI, the script prioritizes downloading the tile with the lowest cloud cover.
-6. Run this code on terminal, to download the sentinel imagery: 
+5. The sentinel_downloader.py script retrieves available Sentinel imagery that overlaps with your area of interest (AOI) based on specified filter criteria.
+6. A series of matching tiles that intersect the study area will be downloaded. For larger areas, multiple tiles meeting the specified criteria (e.g., cloud coverage, acquisition time) may be retrieved. When multiple tiles cover the same area and meet all criteria, the selection will be based on the lowest cloud coverage.
+7. Run this code on terminal, to download the sentinel imagery: 
 
     `python sentinel_downloader.py`
