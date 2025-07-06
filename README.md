@@ -10,7 +10,11 @@ Run this command on terminal:
 
 `conda env create --file=environment.yml`
 
-- For windows user: Please refer conda user guidance to install conda, and create a virtual environment with the .yaml file (https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)
+      For windows user: Please refer conda user guidance to install conda, and create a virtual environment with the .yaml file (https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)
+
+- Run this command on terminal to activate the virtual environment:
+
+`conda activate xxxxx`
 
 
 ### Imagery acquisition

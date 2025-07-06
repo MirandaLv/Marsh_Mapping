@@ -17,6 +17,7 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 # ACCESS_KEY = ""
 # SECRET_KEY = ""
 
+
 ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
 SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 
