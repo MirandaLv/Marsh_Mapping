@@ -2,7 +2,7 @@
 
 This post outlines the workflow for mapping tidal marshes using Sentinel-2 multispectral imagery and National Agriculture Imagery Program (NAIP) data. It covers the full process - from data download and preprocessing to model prediction and post-processing of the imagery.
 
-### Setting up the working environment
+## Setting up the working environment
 
 - For mac and linux user, run this command on terminal:
 
@@ -17,13 +17,13 @@ For windows user: Please refer conda user guidance to install conda, and create 
     `conda activate xxxxx`
 
 
-### Imagery acquisition
+## Imagery Acquisition
 - **Sentinel-2 data:** Follow this page to download Sentinel multispectral data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/Sentinel-2.  
 
 - **NAIP:** Follow this page to download NAIP data: https://github.com/MirandaLv/Marsh_Mapping/tree/main/dataset/raw/NAIP. 
 
 
-### Imagery preprocessing
+## Imagery Preprocessing
 
 **Sentinel MSI imagery preprocessing from raw**
 1. Converting the raw .jp2 imagery band to .tif
@@ -33,10 +33,10 @@ For windows user: Please refer conda user guidance to install conda, and create 
 5. Creating imagery patches and saved into 'dataset/sentinel/patches' for imagery inferencing.
 
 
-### Model inference
+### Model Inference
 
 
-### Image post-processing
+## Image Post-processing
 
 
 
