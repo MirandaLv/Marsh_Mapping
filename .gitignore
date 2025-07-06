@@ -7,6 +7,10 @@ __pycache__/
 *.so
 
 # files
+*.xsl
+*.html
+*.jpg
+*.safe
 *.shp
 *.shx
 *.geojson
@@ -20,6 +24,8 @@ __pycache__/
 *.tif
 *.ckpt
 *.xml
+*.zip
+*.xsd
 
 
 # Distribution / packaging
