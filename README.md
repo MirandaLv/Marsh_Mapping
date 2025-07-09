@@ -73,7 +73,9 @@ This code executes the marsh_naip.py script located in the model folder. The scr
 
 Please note that if the number of image patches is very large, you may encounter memory-related errors. This typically occurs when the script attempts to open hundreds of .tif files simultaneously, exceeding system memory limits. If such an error arises, refer to the alternative solutions suggested in the terminal output.
 
-Below is an example of the error message you might see: ![Alt text](dataset/raw/Sentinel-2/screenshots/stitch_error.png)
+Below is an example of the error message you might see: 
+
+![Alt text](dataset/raw/Sentinel-2/screenshots/stitch_error.png)
 
 Follow the recommended alternative methods to merge the predicted patches into a complete tile-level detection output.
 
