@@ -6,7 +6,8 @@ This post outlines the workflow for mapping tidal marshes using Sentinel-2 multi
 
 - For mac and linux user, run this command on terminal:
 
-    `conda env create --file=environment.yml`
+
+    conda env create --file=environment.yml
 
 For windows user: Please refer conda user guidance to install conda, and create a virtual environment with the .yaml file (https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html). 
 
@@ -14,7 +15,8 @@ For windows user: Please refer conda user guidance to install conda, and create 
 
 - Run this command on terminal to activate the virtual environment:
 
-    `conda activate xxxxx`
+
+    conda activate xxxxx
 
 
 ## Imagery Acquisition
