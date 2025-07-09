@@ -41,10 +41,13 @@ def process_marsh_mask(raw_image_path: Path,
 
 
 if __name__ == "__main__":
+    project_root = Path(__file__).resolve().parent.parent
+
     # Example usage
-    raw_image = Path("../dataset/raw/NAIP/2022/m_3707654_sw_18_060_20210913.tif")
-    marsh_pred = Path("../dataset/predicted/NAIP/merge_2022__guinea.tif")  # Binary prediction (1/0)
-    output_mask = Path("../dataset/predicted/NAIP/m_3707654_sw_18_060_20210913_cleaned.tif")
+    raw_image = project_root / "dataset/raw/NAIP/2022/m_3707654_sw_18_060_20210913.tif"
+    marsh_pred = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913.tif"
+    output_mask = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913_cleaned.tif"
+
 
     process_marsh_mask(
         raw_image_path=raw_image,

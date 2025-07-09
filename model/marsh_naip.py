@@ -5,8 +5,14 @@ from torch.utils.data import DataLoader
 import rasterio
 from dataloader import GenMARSH
 from trainer import SemanticSegmentationTask
-from stitching import stitch_tiff_patches
+import sys
 
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
+
+from processing.stitching import stitch_tiff_patches
+
+import os
 
 def load_model(checkpoint_path: Path, device: torch.device) -> torch.nn.Module:
     """Loads the model from checkpoint and sets it to evaluation mode."""
@@ -66,15 +72,16 @@ def run_inference(model: torch.nn.Module, dataloader: DataLoader, output_dir: Pa
 
 
 def main(year: str, tile_name: str) -> None:
-    base_path = Path("../dataset")
+
+    base_path = os.path.join(project_root, 'dataset')
 
     # Add underscore only if tile_name is provided
-    suffix = f"_{tile_name}" if tile_name else ""
+    suffix = f"{tile_name}" if tile_name else ""
 
-    patch_folder = base_path / f"processed/NAIP_{year}/patches"
-    checkpoint_path = Path("../weights/NAIP/unet/last.ckpt")
-    prediction_output = base_path / f"predicted/NAIP/inference_{year}{suffix}"
-    mosaic_output = base_path / f"predicted/NAIP/merge_{year}{suffix}.tif"
+    patch_folder = Path(base_path) / f"processed/NAIP_{year}/{suffix}_patches"
+    checkpoint_path = Path(project_root) / f"weights/NAIP/unet/last.ckpt"
+    prediction_output = Path(base_path) / f"predicted/NAIP/inference_{year}_{suffix}"
+    mosaic_output = Path(base_path) / f"predicted/NAIP/merge_{year}_{suffix}.tif"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     batch_size = 32

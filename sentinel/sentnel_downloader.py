@@ -6,6 +6,7 @@ import geopandas as gpd
 from pystac_client import Client
 from typing import Tuple, List
 import pandas as pd
+from pathlib import Path
 
 # -------- Configuration -------- #
 STAC_URL = "https://catalogue.dataspace.copernicus.eu/stac" # for data filtering
@@ -20,15 +21,18 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
 SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 
+project_root = Path(__file__).resolve().parent.parent
+AOI_PATH = os.path.join(project_root, 'dataset/raw/guinea_marsh.geojson')
+
 PRODUCT_TYPE = "S2MSI2A" # Level-2A product
 DATA_COLLECTION = "SENTINEL-2"
 MAX_CLOUD_COVER = 3
 START_DATE = "2018-05-01"
 END_DATE = "2018-10-30"
-AOI_PATH = "../dataset/raw/guinea_marsh.geojson"
+
 
 # AOI_PATH = "../boundary.geojson"
-OUTPUT_DIR = "../dataset/raw"
+OUTPUT_DIR = os.path.join(project_root, 'dataset/raw')
 DATA_META = "sentinel2_meta.csv"
 
 
