@@ -49,7 +49,6 @@ For windows user: Please refer conda user guidance to install conda, and create 
 - Open the 'preprocessing_sentinel.py' script and update the year and AOI variables. Set the year to match the dataset you want to process, and assign a meaningful location name to the AOI variable.
 - Run imagery preprocessing for sentinel data, run:
 
-
     'python processing/preprocessing_sentinel.py'
 
 
