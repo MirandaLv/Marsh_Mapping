@@ -50,7 +50,7 @@ For windows user: Please refer conda user guidance to install conda, and create 
 - Run imagery preprocessing for sentinel data, run:
 
 
-    python processing/preprocessing_sentinel.py
+    'python processing/preprocessing_sentinel.py'
 
 
 ## Model Inference
