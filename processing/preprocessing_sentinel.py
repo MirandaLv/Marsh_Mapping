@@ -6,26 +6,27 @@ from pathlib import Path
 from util import re_projection, create_mosaic, merge_bands_to_multispectral, split_and_save_patches, reproject_to_match
 import glob
 
-year = "2017"
+year = "2018"
+AOI = "aoi"
 
-base_path = Path.cwd().parent
+project_root = Path(__file__).resolve().parent.parent
 
 # The data are saved to different subfolder name depending on the year
 if int(year) >= 2022:
-    raw_data_path = Path(os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A/{}".format(year)))
+    raw_data_path = Path(os.path.join(project_root, "dataset/raw/Sentinel-2/MSI/L2A/{}".format(year)))
 else:
-    raw_data_path = Path(os.path.join(base_path, "dataset/raw/Sentinel-2/MSI/L2A_N0500/{}".format(year)))
+    raw_data_path = Path(os.path.join(project_root, "dataset/raw/Sentinel-2/MSI/L2A_N0500/{}".format(year)))
 
-aoi_path = os.path.join(base_path, "bounding_box.geojson")
+# aoi_path = os.path.join(base_path, "bounding_box.geojson")
 
-b_path = os.path.join(base_path, "dataset/processed/sentinel_{}".format(year))
+b_path = os.path.join(project_root, "dataset/processed/sentinel_{}_{}".format(AOI, year))
 
 # Setting up different directories for the data
-(base_path / 'dataset' / 'processed' /'sentinel_{}'.format(year)).mkdir(exist_ok=True, parents=True)
-(base_path / 'dataset' /'processed' / 'sentinel_{}'.format(year) / 'reprojection').mkdir(exist_ok=True, parents=True)
+(project_root / 'dataset' / 'processed' /'sentinel_{}_{}'.format(AOI, year)).mkdir(exist_ok=True, parents=True)
+(project_root / 'dataset' /'processed' / 'sentinel_{}_{}'.format(AOI, year) / 'reprojection').mkdir(exist_ok=True, parents=True)
 reproject_path = os.path.join(b_path, 'reprojection')
 
-merge_output_path = os.path.join(b_path, "combined_{}.tif".format(year))
+merge_output_path = os.path.join(b_path, "combined_{}_{}.tif".format(AOI, year))
 
 output_dir = os.path.join(b_path, "patches")
 
@@ -40,6 +41,7 @@ for b, res in zip(band_list, res_list):
     band_granules_path = list(raw_data_path.rglob("*B{}_{}m.jp2".format(b, res)))
 
     band_granules_src = [rasterio.open(i, driver='JP2OpenJPEG') for i in band_granules_path]
+
     proj_band_path = [os.path.join(reproject_path, Path(i).stem + '_wgs84.tif') for i in band_granules_path]
 
     all_bands_path.append(proj_band_path[0])

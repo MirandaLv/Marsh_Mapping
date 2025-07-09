@@ -23,9 +23,10 @@ SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 PRODUCT_TYPE = "S2MSI2A" # Level-2A product
 DATA_COLLECTION = "SENTINEL-2"
 MAX_CLOUD_COVER = 3
-START_DATE = "2017-05-01"
-END_DATE = "2017-10-30"
+START_DATE = "2018-05-01"
+END_DATE = "2018-10-30"
 AOI_PATH = "../dataset/raw/guinea_marsh.geojson"
+
 # AOI_PATH = "../boundary.geojson"
 OUTPUT_DIR = "../dataset/raw"
 DATA_META = "sentinel2_meta.csv"

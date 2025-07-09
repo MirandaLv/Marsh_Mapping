@@ -25,12 +25,32 @@ For windows user: Please refer conda user guidance to install conda, and create 
 
 ## Imagery Preprocessing
 
-**Sentinel MSI imagery preprocessing from raw:**
+### **Sentinel MSI imagery preprocessing from raw:**
 1. Converting the raw .jp2 imagery band to .tif
 2. Reprojecting individual sentinel band (.tif) to WGS-84, and resampling all bands into standarded 10m resolution.
 3. Imagery mosaic if multiple tiles are downloaded.
 4. Merging the 10-m bands into a multispectral imagery. 
-5. Creating imagery patches and saved into 'dataset/sentinel_year/patches' for imagery inferencing.
+5. Creating 128 * 128 multispectral imagery patches and saved into 'dataset/sentinel_year/patches' for imagery inferencing.
+
+**Step to run the code for Sentinel data preprocessing:**
+
+- Open the 'preprocessing_sentinel.py' script and update the year and AOI variables. Set the year to match the dataset you want to process, and assign a meaningful location name to the AOI variable.
+- Run imagery preprocessing for sentinel data, run:
+
+
+    python processing/preprocessing_sentinel.py
+
+### **NAIP imagery preprocessing from raw:**
+1. The NAIP imagery usually is downloaded as .tif file, so there is not much preprocessing needed.
+2. Creating 256 * 256 dimension patches for prediction. 
+
+**Step to run the code for NAIP data preprocessing:**
+
+- Open the 'preprocessing_sentinel.py' script and update the year and AOI variables. Set the year to match the dataset you want to process, and assign a meaningful location name to the AOI variable.
+- Run imagery preprocessing for sentinel data, run:
+
+
+    python processing/preprocessing_sentinel.py
 
 
 ## Model Inference
