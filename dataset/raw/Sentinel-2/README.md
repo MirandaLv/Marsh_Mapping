@@ -18,6 +18,6 @@ The Copernicus Open Access Hub (SciHub) was deprecated in 2023, thus a more conv
 7. Run this code on terminal, to download the sentinel imagery: 
 
 
-    python sentinel/sentinel_downloader.py
+    python sentinel/downloader_sentinel.py
 
 The raw data will be downloaded to 'dataset/raw/Sentinel-2' folder.
