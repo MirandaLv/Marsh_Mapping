@@ -108,3 +108,23 @@ To post-process the predictions generated in the previous step for the tile m_37
 
     python processing/postprocessing.py
 
+
+
+### Citation
+For more details about this work, please refer to our paper. Thank you!
+
+```
+@article{Lv2024,
+author = {Zhonghui Lv and Karinna Nunez and Ethan Brewer and Dan Runfola},
+title = {Mapping the tidal marshes of coastal Virginia: a hierarchical transfer learning approach},
+journal = {GIScience \& Remote Sensing},
+volume = {61},
+number = {1},
+pages = {2287291},
+year = {2024},
+publisher = {Taylor & Francis},
+doi = {10.1080/15481603.2023.2287291},
+URL = {https://doi.org/10.1080/15481603.2023.2287291},
+eprint = {https://doi.org/10.1080/15481603.2023.2287291}
+}
+```
