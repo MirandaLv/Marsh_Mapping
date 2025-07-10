@@ -98,8 +98,7 @@ on the terminal, you will get the marsh prediction result saved under 'dataset/p
 
 ## Image Post-processing
 
-### **Image Post-processing with Sentinel Imagery**
-
+[comment]: <> (### **Image Post-processing with Sentinel Imagery**)
 
 
 ### **Image Post-processing with NAIP Imagery**
