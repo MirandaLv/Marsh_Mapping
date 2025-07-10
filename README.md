@@ -108,19 +108,3 @@ To post-process the predictions generated in the previous step for the tile m_37
 
     python processing/postprocessing.py
 
-
-
-
-
-
-
-### To do
-- Sentinel metadata retrieval -> .csv (done)
-- Sentinel data downloader (done)
-- Imagery tile preprocessing (done) 
-- Model architecture
-- deep learning dataloader
-- imagery inference
-- stitch back to original data
-
-- Maybe add a NAIP feature to the code;
