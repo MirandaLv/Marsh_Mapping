@@ -6,7 +6,8 @@ from util import read_multiband_image, create_land_water_mask, compute_ndwi, rea
 def process_marsh_mask(raw_image_path: Path,
                        marsh_pred_path: Path,
                        output_path: Path,
-                       ndwi_threshold: float = 0.0) -> None:
+                       image_source: str,
+                       ndwi_threshold: float = 0.5) -> None:
     """
     Clean marsh prediction mask by removing areas classified as water based on NDWI.
 
@@ -19,8 +20,12 @@ def process_marsh_mask(raw_image_path: Path,
 
     print(f"[INFO] Reading raw image from: {raw_image_path}")
     raw = read_multiband_image(raw_image_path)
-    green = raw[1]  # Band 2: Green (0-based index 1)
-    nir = raw[3]    # Band 4: NIR   (0-based index 3)
+    if image_source.lower() == "naip":
+        green = raw[1]  # Band 2: Green (0-based index 1)
+        nir = raw[3]    # Band 4: NIR   (0-based index 3)
+    elif image_source.lower() == "sentinel":
+        green = raw[1]  # Band 2: Green (0-based index 1)
+        nir = raw[6]
 
     print("[INFO] Computing NDWI...")
     ndwi = compute_ndwi(green, nir)
@@ -44,14 +49,19 @@ if __name__ == "__main__":
     project_root = Path(__file__).resolve().parent.parent
 
     # Example usage
-    raw_image = project_root / "dataset/raw/NAIP/2022/m_3707654_sw_18_060_20210913.tif"
-    marsh_pred = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913.tif"
-    output_mask = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913_cleaned.tif"
+    # raw_image = project_root / "dataset/raw/NAIP/2022/m_3707654_sw_18_060_20210913.tif"
+    # marsh_pred = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913.tif"
+    # output_mask = project_root / "dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913_cleaned.tif"
+
+    raw_image = project_root / "dataset/processed/sentinel_aoi_2018/combined_aoi_2018.tif"
+    marsh_pred = project_root / "dataset/predicted/sentinel/merge_aoi_2018.tif"
+    output_mask = project_root / "dataset/predicted/sentinel/merge_aoi_2018_cleaned.tif"
 
 
     process_marsh_mask(
         raw_image_path=raw_image,
         marsh_pred_path=marsh_pred,
         output_path=output_mask,
+        image_source="sentinel",
         ndwi_threshold=0.5  # adjust threshold as needed (e.g., 0.1 for conservative masking)
     )

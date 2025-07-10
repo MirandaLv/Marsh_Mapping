@@ -36,7 +36,7 @@ For windows user: Please refer conda user guidance to install conda, and create 
 
 **Step to run the code for Sentinel data preprocessing:**
 
-- Open the 'preprocessing_sentinel.py' script and update the year and AOI variables. Set the year to match the dataset you want to process, and assign a meaningful location name to the AOI variable.
+- Open the 'preprocessing_sentinel.py' script and update the year and AOI variables. Set the year to match the dataset you want to process, and assign a meaningful location name to the AOI variable. Assuming the sentinel data you download in previous step is in 2018, with the area of interest name 'aoi'. Set the year = '2018' and AOI = "aoi". 
 - Run imagery preprocessing for sentinel data, run:
 
 
@@ -63,6 +63,17 @@ You will find a 'tilename_patches' folder under the directory 'dataset/processed
 
 ## Model Inference
 
+### **Model Inference with Sentinel Imagery**
+Open the 'marsh_sentinel.py' script under the model folder, and modify the main() function input parameters. From previous step, the year = '2018', and AOI = 'aoi', make sure the two variables in the main functions have the year and aoi name that matches to your previous step.
+
+Run the code:
+
+    python model/marsh_sentinel.py
+
+This code executes the marsh_sentinel.py script located in the model folder. The script reads all image patches generated during the sentinel data preprocessing step, runs model inference on each patch, stitches the predictions into a single output, and saves the result to a specified destination folder. If error occurs for the stitching step, reference the explanation in below session.
+
+The result will be saved under 'dataset/predicted/sentinel/merge_aoi_year.tif'.
+
 ### **Model Inference with NAIP Imagery**
 Take an imagery tile with a name 'm_3707654_sw_18_060_20210913.tif' acquired from 2022 for example, this is one of the tile that covers your AOI area, this tile should be saved under 'dataset/raw/NAIP/2022' folder. Run below code for marsh detection with a pretrained U-Net model:
 
@@ -86,6 +97,10 @@ For example, run
 on the terminal, you will get the marsh prediction result saved under 'dataset/predicted/NAIP/merge_2022_m_3707654_sw_18_060_20210913.tif'.
 
 ## Image Post-processing
+
+### **Image Post-processing with Sentinel Imagery**
+
+
 
 ### **Image Post-processing with NAIP Imagery**
 

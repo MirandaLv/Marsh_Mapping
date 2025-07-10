@@ -15,8 +15,11 @@ ENDPOINT_URL = "https://eodata.dataspace.copernicus.eu" # for data download
 # -------- Replace your access key an secret key from https://dataspace.copernicus.eu/ --------
 # More info: https://documentation.dataspace.copernicus.eu/APIs/OData.html#product-download
 
-ACCESS_KEY = ""
-SECRET_KEY = ""
+# ACCESS_KEY = ""
+# SECRET_KEY = ""
+
+ACCESS_KEY = "JJCUBN24Y625RQYJ3SQ3"
+SECRET_KEY = "t4Yvf0sEfoODqu4TBUNIn7rpJuKwIcuuKTuM2gNN"
 
 project_root = Path(__file__).resolve().parent.parent
 AOI_PATH = os.path.join(project_root, 'dataset/raw/guinea_marsh.geojson')

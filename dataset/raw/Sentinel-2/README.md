@@ -17,6 +17,7 @@ The Copernicus Open Access Hub (SciHub) was deprecated in 2023, thus a more conv
 6. A series of matching tiles that intersect the study area will be downloaded. For larger areas, multiple tiles meeting the specified criteria (e.g., cloud coverage, acquisition time) may be retrieved. When multiple tiles cover the same area and meet all criteria, the selection will be based on the lowest cloud coverage.
 7. Run this code on terminal, to download the sentinel imagery: 
 
-    `python sentinel_downloader.py`
+
+    python sentinel/sentinel_downloader.py
 
 The raw data will be downloaded to 'dataset/raw/Sentinel-2' folder.
